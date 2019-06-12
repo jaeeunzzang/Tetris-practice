@@ -7,6 +7,7 @@
 #define RIGHT 77
 #define SPACEBAR 32
 
+
 typedef struct _COORD{
   short x;
   short y;
@@ -31,31 +32,31 @@ while(kbhit()) {
      key=getch();
      switch(key) {
       
-        case UP;
-        break;
+          case UP;
+          break;
       
-        case DOWN;
-        break;
+          case DOWN;
+          break;
       
-        case LEFT;
-        break;
+         case LEFT;
+         break;
        
-        case RIGHT;
-        break;
-      
+         case RIGHT;
+         break;
+          
                }
   
   if(key==SPACEBAR) {
     /* later
     */
     
-             }
-  }
+                 }
+         }
   
 void gotoxy(int x,int y){
   COORD pos={x,y};
   SetConsoleCursorPosition(GetStdHandle(STD_OUTPUT_HANDLE),pos);
-  }
+      }
   
 void removeCur(){
   CONSOLE_CURSOR_INFO curinfo;
