@@ -18,7 +18,7 @@ typedef struct _tetris{
   int level;
   int gameover;
   int score;
-  int rotation;
+  int rotation+=rotation%4;
   int curblock;
   int nextblock;
   int absX,absY;
