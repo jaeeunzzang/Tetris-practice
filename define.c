@@ -64,6 +64,17 @@ void removeCur(){
   GetConsoleCursorInfo(GetStdHandle(STD_OUTPUT_HANDLE),&curinfo);
   }
 
+void removeCurBlock(Tetris t)
+{
+  for(int i=0;i<4;i++)
+    for(int j=0;j<4;j++)
+      if(blocks[t.curblock][t.rotation][j][i]==1)
+      {
+        setCursor(i+t.curX)*2+t.absX, j+t.curY+t.absY);
+        printf(" ");
+      }
+}
+
 
 
 
