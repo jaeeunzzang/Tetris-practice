@@ -268,6 +268,31 @@ int main()
 
 void title(void)
 {
+  int x=5;
+  int y=4;
+  int cnt;
+  
+  goto(x,y+0);  printf("┌───────────────────┐"); Sleep(100);
+  goto(x,y+1);  printf("│                   │"); Sleep(100);
+  goto(x,y+2);  printf("│                   │"); Sleep(100);
+  goto(x,y+3);  printf("│                   │"); Sleep(100);
+  goto(x,y+4);  printf("└───────────────────┘"); Sleep(100);
+  goto(x,y+5);  printf("Please Enter Any Key to Start");
+  
+  for(cnt=0;;cnt++)
+  {
+    if(kbhit())
+      break;
+    if(cnt%200==0)
+    {
+      goto(x+1,y+2);
+      printf("☆ T E T R I S ☆");
+    }
+    if(cnt%200-100==0)
+    {
+      goto(x+1,y+2);
+      printf("                 ");
+    }
   
   
    
