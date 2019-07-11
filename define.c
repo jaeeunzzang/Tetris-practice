@@ -227,6 +227,46 @@ void setcursortype(CURSOR_TYPE c){
   SetConsoleCursorInfo(GetStdHandle(STD_OUTPUT_HANDLE)&CurInfo);
 }
 
+/* 메인함수 */
+
+int main()
+{
+  int i;
+  
+  srand((unsigned)time(NULL)); //랜덤함수 난수생성
+  setcursortype(NOCURSOR); //커서없앰
+  title();
+  reset();
+  
+  while(1)
+  {
+    for(i=0;i<5;i++) //블록이 한칸 떨어지는동안 다섯번 키 입력 가능.
+    {
+      check_key(); //키 입력 확인
+      draw_main(); //화면을 그림
+      Sleep(speed); //게임 속도 조절
+      if(crush_on&&check_crush(bx,by+1,b_rotation)==false)
+        Sleep(100);
+      //블록이 충돌중일경우 추가로 이동 및 회전할 시간을 갖음
+      
+      if(space_key_on==1) //스페이스바를 누른 경우 추가로 이동 및 회전할수 없음.
+      {
+        space_key_on=0;
+        break;
+      }
+    }
+    drop_block(); //블록 한칸 내림
+    check_level_up(); //레벨업 체크
+    check_game_over(); //게임오버 체크
+    if(new_block_on==1) //뉴블럭 플래그가 있으면 새로운블럭 생성
+      new_block();
+  }
+}
+    
+  /* 타이틀 함수 작성 */
+
+void title(void)
+{
   
   
    
