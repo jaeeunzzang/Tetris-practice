@@ -188,8 +188,47 @@ void draw_main(void); //게임판을 그림
 void new_block(void); //새로운 블록을 만듬
 void check_key(void); //키보드로 키를 입력받음
 void drop_block(void); //블록을 아래로 떨어트림
+void move_block(int dir); //dir방향으로 블록을 움직임
+void check_line(void); //줄이 가득 찼는지 판단하고 지움
+void check_levelup(void);// 레벨목표가 달성되었는지 판단하고 레벨업
+void check_game_over(void);//게임오버인지 판단하고 진행
+void pause(void);//게임 일시정지
 
+int check_crush(int bx,int by, int rotation); //bx,by위치에 로테이션 회전값을 갖는경우 충돌판단
 
+void gotoxy(int x,int y) {
+  COORD pos={2*x,y};
+  SetConsoleCursorPosition(GetStdHandle(STD_OUTPUT_HANDLE),pos);
+}
+
+typedef enum{
+  NOCURSOR,SOLIDCURSOR,NORMALCURSOR
+}CURSOR_TYPE;
+
+void setcursortype(CURSOR_TYPE c){
+  CONSOLE_CURSOR_INFO CurInfo;
+  
+  switch(c){
+    case NOCURSOR:
+      CurInfo.dwSize=1;
+      CurInfo.bVisible=FALSE;
+      break;
+      
+    case SOLIDCURSOR:
+      CurInfo.dwSize=100;
+      CurInfo.bVisivle=TRUE;
+      break;
+      
+    case NORMALCURSOR:
+      CurInfo.dwSize=20;
+      CurInfo.bVisible=TRUE;
+      break;
+  }
+  SetConsoleCursorInfo(GetStdHandle(STD_OUTPUT_HANDLE)&CurInfo);
+}
+
+  
+  
    
   
   
