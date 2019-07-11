@@ -174,6 +174,20 @@ int score;
 int last_score=0;
 int best_score=0;
 
+int new_block_on=0; //새로운 블럭이 필요함을 알리는 플래그
+int crush_on=0; //현재 이동중인 블록이 충돌상태인지 알려주는 플래그
+int level_up_on=0; //다음레벨로 진행을 알리는 플래그
+int space_key_on=0; //하드드롭상태임을 알려주는 플래그
+
+/* 함수 원형 정의 */
+void title(void); //게임 시작화면
+void reset(void); //게임판 초기화
+void reset_main(void); //메인 게임판 main_org[][]를 초기화
+void draw_map(void); //게임 전체 인터페이스 표시
+void draw_main(void); //게임판을 그림
+void new_block(void); //새로운 블록을 만듬
+void check_key(void); //키보드로 키를 입력받음
+void drop_block(void); //블록을 아래로 떨어트림
 
 
    
