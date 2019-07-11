@@ -203,10 +203,10 @@ void gotoxy(int x,int y) {
 
 typedef enum{
   NOCURSOR,SOLIDCURSOR,NORMALCURSOR
-}CURSOR_TYPE;
+}CURSOR_TYPE; //커서 숨기는 함수에 사용되는 열거형 
 
 void setcursortype(CURSOR_TYPE c){
-  CONSOLE_CURSOR_INFO CurInfo;
+  CONSOLE_CURSOR_INFO CurInfo; 
   
   switch(c){
     case NOCURSOR:
@@ -225,7 +225,8 @@ void setcursortype(CURSOR_TYPE c){
       break;
   }
   SetConsoleCursorInfo(GetStdHandle(STD_OUTPUT_HANDLE)&CurInfo);
-}
+} //커서 숨기는 함수
+
 
 /* 메인함수 */
 
