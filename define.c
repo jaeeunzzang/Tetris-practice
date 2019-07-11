@@ -154,7 +154,28 @@ int blocks[7][4][4][4]={
     0,0,1,0,
     0,0,1,0,
     0,0,0,0}}//L모양
-};
+}; //blocks[b_type][b_rotation][i][j]
+
+int b_type; //블록 종류 저장
+int b_rotation; //블록의 회전값 저장
+int b_type_next; //다음 블록값 저장
+
+int main_org[MAIN_Y][MAIN_X];//게임판 정보저장배열 모니터표시 -> main_cpy로 복사
+int main_cpy[MAIN_Y][MAIN_X];//게임판이 모니터에 표시되기 전의 정보를 가지고있음.
+/*main의 전체를 계속 모니터에 표시하지 않고 cpy와 배열을 비교해 값이 달라진 곳만 모니터에 고침.*/
+
+int bx,by; //이동중인 블록의 게임 판 상의 x,y좌표 저장
+int key; //키보드로 입력받은 키값저장.
+int speed;
+int level;
+int level_goal; //다음레벨까지 목표점수
+int cnt; //현재 레벨에서 제거한 줄수저장
+int score;
+int last_score=0;
+int best_score=0;
+
+
+
    
   
   
