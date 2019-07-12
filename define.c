@@ -389,79 +389,54 @@ void title(void)
    gotoxy(STATUS_X_ADJ,y+13); printf("    %6d",best_score);
    gotoxy(STATUS_X_ADJ,y+14); printf(""); /*여기서부터 조작법설명*/
  }
-   
   
-  
-
-typedef struct _COORD{
-  short x;
-  short y;
-}COORD;
-
-
-typedef struct _tetris{
-  int level;
-  int gameover;
-  int score;
-  int rotation+=rotation%4;
-  int curblock;
-  int nextblock;
-  int absX,absY;
-  int curX,curY;
- }Tetris;
-  
-  char key;
-  key=getch();
-  
-while(kbhit()) {
-     key=getch();
-     switch(key) {
-      
-          case UP;
-          break;
-      
-          case DOWN;
-          break;
-      
-         case LEFT;
-         break;
-       
-         case RIGHT;
-         break;
-          
-               }
-  
-  if(key==SPACEBAR) {
-    /* later
-    */
+  void draw_main(void) //게임판을 그려주는 함수
+  {
+    int i,j;
     
-                 }
-         }
-  
-void gotoxy(int x,int y){
-  COORD pos={x,y};
-  SetConsoleCursorPosition(GetStdHandle(STD_OUTPUT_HANDLE),pos);
-      }
-  
-void removeCur(){
-  CONSOLE_CURSOR_INFO curinfo;
-  curinfo.bVisible=0;
-  GetConsoleCursorInfo(GetStdHandle(STD_OUTPUT_HANDLE),&curinfo);
-  }
-
-void removeCurBlock(Tetris t)
-{
-  for(int i=0;i<4;i++)
-    for(int j=0;j<4;j++)
-      if(blocks[t.curblock][t.rotation][j][i]==1)
+    for(j=1;j<MAIN_X-1;j++)
+    {
+      if(main_org[3][j]==EMPTY) //계속 새로운 블럭이 지나가서 지워지면 새로 그림
+        main_org[3][j]=CEILLING;
+    }
+    
+    for(i=0;i<MAIN_Y;i++)
+    {
+      for(j=0;j<MAIN_X;j++)
       {
-        setCursor(i+t.curX)*2+t.absX, j+t.curY+t.absY);
-        printf(" ");
+        if(main_cpy[i][j]!=main_org[i][j])
+          /*cpy랑 비교해서 값이 달라진 부분만 새로 그려줌
+          없으면 게임판 전체를 계속 새로그려서 느려지고 반짝거림.*/
+        {
+          gotoxy(MAIN_X_ADJ+j,MAIN_Y_ADJ+i);
+          switch(main_org[i][j])
+          {
+            case EMPTY:
+              printf(" "); //빈칸
+              break;
+            case CEILLING:
+              printf(". "); //천장
+              break;
+            case WALL:
+              printf("▩"); //벽
+              break;
+            case INACTIVE_BLOCK:
+              printf("□"); //굳은 블록
+              break;
+            case ACTIVE_BLOCK:
+              printf("■"); //움직이는 블록
+              break;
+          }
+        }
       }
-}
-
-
-
-
-
-
+    }
+    for(i=0;i<MAIN_Y;i++) //게임판을 그린 후 main_cpy에 복사.
+    {
+      for(j=0;j<MAIN_X;j++)
+      {
+        main_cpy[i][j]=main_org[i][j];
+      }
+    }
+  }
+  
+              
