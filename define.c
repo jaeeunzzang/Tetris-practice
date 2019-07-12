@@ -475,6 +475,70 @@ void title(void)
     }
   }
   
+  void check_key(void)
+  {
+    key=0;
+    
+    if(kbhit())
+    {
+      key=getch();
+      if(key==224)
+      {
+        do
+        {
+          key=getch();
+        } while(key==224);
+        /*방향키*/
+        switch(key)
+        {
+          case LEFT:
+            if(check_crush(bx-1,by,b_rotation)==true)
+              move_block(LEFT);
+            break;
+          case RIGHT:
+            if(check_crush(bx+1,by,b_rotation)==true)
+              move_block(RIGHT);
+            break;
+          case DOWN:
+            if(check_crush(bx,by+1,b_rotation)==true)
+              move_block(DOWN);
+            break;
+          case UP:
+            if(check_crush(bx,by,(b_rotation+1)%4)==true)
+              move_block(UP); //회전체크후 가능하면 회전
+            else if(crush_on==1&&check_crush(bx,by-1(b_rotation+1)%4)==true)
+              move_block(100); //바닥에 닿은경우 위쪽으로 한칸 띄워서 회전이 가능하면 회전.
+            /*break 여긴안하나?*/
+        }  
+      }
+       /*특수동작*/
+      else
+      {
+        switch(key)
+        {
+          case SPACE: //스페이스바 누르면
+            space_key_on=1;
+            while(crush_on==0) //바닥에 닿을때까지 블록 이동
+            {
+              drop_block();
+              score+=level; //추가점수 보너스
+              gotoxy(STATUS_X_ADJ,STATUS_Y_SCORE);
+              printf("    %6d",score);
+            }break;
+          case p:
+          case P:
+            pause();
+            break; //일시정지
+          case ESC:
+            system("cls");
+            exit(0); //게임종료
+        }
+      }
+    }
+   while(kbhit())
+     getch();
+  } //키버퍼 비우기
+  
            
            
            
