@@ -293,6 +293,41 @@ void title(void)
       goto(x+1,y+2);
       printf("                 ");
     }
+    
+    while(kbhit())
+      getch();
+  }
+  
+  void reset(void)
+  {
+    FILE *file=fopen("score.dat","rt");
+    if(file==0)
+      best_score=0;
+    else
+    {
+      fscanf(file,"%d",&best_score);
+      fclose(file);
+    }
+    
+    level=1;
+    score=0;
+    level_goal=1000;
+    key=0;
+    crush_on=0;
+    cnt=0;
+    speed=100;
+    
+    system("cls");
+    reset_main();
+    draw_map();
+    draw_main();
+    
+    b_type_next=rand()%7;
+    new_block();
+    
+  }
+  
+  
   
   
    
