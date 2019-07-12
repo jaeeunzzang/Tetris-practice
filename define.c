@@ -327,6 +327,45 @@ void title(void)
     
   }
   
+  void reset_main(void)  //게임판 초기화
+  {
+    int i,j;
+    
+    for(i=0;i<MAIN_Y;i++) //게임판 0으로 초기화
+    {
+      for(j=0;j<MAIN_X;j++)
+      {
+        main_org[i][j]=0;
+        main_cpy[i][j]=0;
+      }
+    }
+    for(j=1;j<MAIN_X;j++) //y값이 3인 위치에 천장을 만듬.
+    {
+      main_org[3][j]=CEILLING;
+    }
+    for(i=1;i<MAIN_Y-1;i++) //좌우 벽 생성
+    {
+      main_org[i][0]=WALL;
+      main_org[i][MAIN_X-1]=WALL;
+    }
+      for(j=0;j<MAIN_X;j++) //바닥 벽 생성
+      {
+        main_org[MAIN_Y-1][j]=WALL;
+      }
+  }
+  
+  void reset_main_cpy(void) //main_cpy 초기화
+  {
+    int i,j;
+    
+    for(i=0;i<MAIN_Y;i++) //게임판에 게임에 사용되지 않는 숫자를 넣음
+    {
+      for(j=0;j<MAIN_X;j++) //main_org와 같은 숫자가 없게 하기 위해서.
+      {
+        main_cpy[i][j]=100;
+      }
+    }
+  }
   
   
   
