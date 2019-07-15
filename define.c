@@ -565,6 +565,24 @@ void title(void)
         crush_on++; //밑으로 이동이 안되면 크러시플래그 켬
     }
     
+   int check_crush(int bx,int by,int b_rotation) //지정된 좌표와 회전값으로 충돌이 있는지 검사.
+   {
+     int i,j;
+     
+     for(i=0;i<4;i++)
+     {
+       for(j=0;j<4;j++) //지정된 위치의 게임판과 블록모양을 비교해서 겹치면 false를 리턴.
+       {
+         if(blocks[b_type][b_rotation][i][j]==1&&main_org[by+i][bx+j]>0)
+           return false;
+       }
+     }
+     return true; //겹치는게 없으면 true리턴
+   }; //세미콜론은 왜??
+    
+    
+    
+    
     
       
   
