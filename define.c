@@ -580,7 +580,94 @@ void title(void)
      return true; //겹치는게 없으면 true리턴
    }; //세미콜론은 왜??
     
+  void move_block(int dir) //블록 이동 함수
+  {
+    int i,j;
     
+    switch(dir)
+    {
+      case LEFT:
+        for(i=0;i<4;i++) //현재 좌표의 블럭을 지움
+        {
+          for(j=0;j<4;j++)
+          {
+            if(blocks[b_type][b_rotation][i][j]==1)
+              main_org[bu+i][bx+j-1]=ACTIVE_BLOCK; //왼쪽으로 한칸 가서 active block지움
+          }
+        }
+        bx--; //좌표값 이동.
+        break;
+        
+      case RIGHT:
+        for(i=0;i<4;i++)
+        {
+          for(j=0;j<4;j++)
+          {
+            if(blocks[b_type][b_rotation][i][j]==1)
+              main_org[by+i][bx+j+1]=ACTIVE_BLOCK;
+          }
+        }
+        bx++;
+        break;
+        
+      case DOWN:
+        for(i=0;i<4;i++)
+        {
+          for(j=0;j<4;j++)
+          {
+            if(blocks[b_type][b_rotation][i][j]==1)
+              main_org[by+i+1][bx+j]=ACTIVE_BLOCK;
+          }
+        }
+        by++;
+        break;
+        
+      case UP: //회전
+        for(i=0;i<4;i++) //현재좌표 블럭 지움
+        {
+          for(j=0;j<4;j++)
+          {
+            if(blocks[b_tupe][b_rotation][i][j]==1)
+              main_org[by+i][bx+j]=EMPTY;
+          }
+        }
+        b_rotation=(b_rotation+1)%4; //회전값 1 증가시킴. 4번째 회전시 0번 상태로.
+        
+        for(i=0;i<4;i++) //회전된 블록 나타냄.
+        {
+          for(j=0;j<4;j++)
+          {
+            if(blocks[b_type][b_rotation][i][j]==1)
+              main_org[by+i][bx+j]=ACTIVE_BLOCK;
+          }
+        }
+        break;
+        
+      case 100: //블럭이 바닥 혹은 다른 블록과 닿은 상태에서 한칸위로 올려 회전이 가능한 경우의 특수동작
+        for(i=0;i<4;i++)
+        {
+          for(j=0;j<4;j++)
+          {
+            if(blocks[b_type][b_rotation][i][j]==1)
+              main_org[by+i][bx+j]=EMPTY;
+          }
+        }
+        b_rotation=(b_rotation+1)%4;
+        for(i=0;i<4;i++)
+        {
+          for(j=0;j<4;j++)
+          {
+            if(blocks[b_type][b_rotation][i][j]==1)
+              main_org[by+i-1][bx+j]=ACTIVE_BLOCK;
+          }
+          by--;
+          break;
+        }
+    }
+        
+        
+        
+        
     
     
     
