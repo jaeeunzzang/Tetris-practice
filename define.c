@@ -539,6 +539,35 @@ void title(void)
      getch();
   } //키버퍼 비우기
   
+  void drop_block(void)
+  {
+    int i,j;
+    
+    if(crush_on&&check_crush(bx,by+1,b_rotation)==true)
+      crush_on=0; //밑이 비어있으면 크러시 플래그 끔
+    if(crush_on&&check_crush(bx,by+1,b_rotation)==false)
+    {
+      for(i=0;i<MAIN_Y;i++)
+      {
+        for(j=0;j<MAIN_X;j++) //밑이 비어있지 않고 크러시 플래그가 켜져있으면
+        {
+          if(main_org[i][j]==ACTIVE_BLOCK)
+            main_org[i][j]=INACTIVE_BLOCLK; //현재 조작중인 블럭을 굳힘.
+        }
+        crush_on=0; //플래그 끔
+        check_line(); //라인체크
+        new_block_on=1; //새로운 블럭생성 플래그 켬
+        return; //함수 종료
+      }
+      if(check_crush(bx,by+1,b_rotation)==true)
+        move_block(DOWN); //밑이 비어있으면 밑으로 한칸이동
+      if(check_crush(bx,by+1,b_rotation)==false)
+        crush_on++; //밑으로 이동이 안되면 크러시플래그 켬
+    }
+    
+    
+      
+  
            
            
            
