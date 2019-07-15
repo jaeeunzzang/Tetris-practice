@@ -194,7 +194,7 @@ void check_levelup(void);// 레벨목표가 달성되었는지 판단하고 레�
 void check_game_over(void);//게임오버인지 판단하고 진행
 void pause(void);//게임 일시정지
 
-int check_crush(int bx,int by, int rotation); //bx,by위치에 로테이션 회전값을 갖는경우 충돌판단
+int check_crush(int bx,int by, int b_rotation); //bx,by위치에 로테이션 회전값을 갖는경우 충돌판단
 
 void gotoxy(int x,int y) {
   COORD pos={2*x,y};
@@ -665,7 +665,60 @@ void title(void)
         }
     }
         
+    void check_line(void)
+    {
+      int i,j,k,l;
+      int block_amount; //한 줄의 블록개수 저장 변수
+      int combo=0; //콤보갯수 저장변수. 지정및 초기화
+      
+      for(i=MAIN_Y-2;i>3;) //i=MAIN_Y-2 :밑쪽 벽의 윗칸부터 -> i>3 : 천장(3)아래까지 검사
+      {
+        block_amount=0; //블록 갯수 저장변수 초기화
+        for(j=1;j<MAIN_X-1;j++) //벽과 벽 사이의 블럭 갯수를 셈
+        {
+          if(main_org[i][j]>0)
+            block_amount++;
+        }
+        if(block_amount==MAIN_X-2) //블럭 한줄이 가득 찬 경우
+        {
+          if(level_up_on==0) //레벨업상태가 아닌경우
+          {
+            score+=100*level; //점수 추가
+            cnt++; //지운 줄갯수 카운트 증가
+            combo++; //콤보수 증가
+          }
+          for(k=i;k>1;k--) //윗줄이 천장이 아닌경우에만 윗줄을 한칸씩 내림.
+          {
+            for(l=1;l<MAIN_X-1;l++)
+            {
+              if(main_org[k-l][l]!=CELLING)
+                main_org[k][l]=main_org[k-1][l];
+              if(main_org[k-l][l]==CEILLING)
+                main_org[k][l]=EMPTY; //윗줄이 천장인 경우에는 빈칸을 채움.
+            }
+          }
+        }
+        else i--;
+      }
+      if(combo) //줄 삭제가 있는경우 점수와 레벨목표를 새로 표시
+      {
+        if(combo>1) //2콤보 이상인 경우 보너스 및 메세지를 게임판에 띄웠다가 지움
+        {
+          gotoxy(MAIN_X_ADJ+(MAIN_X/2)-1,MAIN_Y_ADJ+by-2);
+          printf("%d COMBO!",combo);
+          Sleep(500);
+          score+=(combo*level*100);
+          reset_main_cpy(); //텍스트를 지우기 위해 메인cpy초기화.
+        }
+        gotoxy(STATUS_X_ADJ,STATUS_Y_GOAL);
+        printf("GOAL : %5d",(cnt<=10)?10-cnt:0);
+        gotoxy(STATUS_X_ADJ,STATUS_Y_SCORE);
+        printf("   %6d",score);
+      }
+    }
         
+            
+      
         
         
     
