@@ -716,18 +716,83 @@ void title(void)
         printf("   %6d",score);
       }
     }
+   
+    void check_level_up(void)
+    {
+      int i,j;
+      
+      if(cnt>=10)
+      {
+        draw_main();
+        level_up_on=1;
+        level+=1;
+        cnt=0;
         
+        for(i=0;i<4;i++)
+        {
+          gotoxy(MAIN_X_ADJ+(MAIN_X/2)-3,MAIN_Y_ADJ+4);
+          printf("     ");
+          gotoxy(MAIN_X_ADJ+(MAIN_X/2)-2,MAIN_Y_ADJ+6);
+          printf("    ");
+          Sleep(200);
+          
+          gotoxy(MAIN_X_ADJ+(MAIN_X/2)-3,MAIN_Y_ADJ+4);
+          printf("LEVEL UP!");
+          gotoxy(MAIN_X_ADJ+(MAIN_X/2)-2,MAIN_Y_ADJ+6);
+          printf("SPEED UP!");
+          Sleep(200);
+        }
+        reset_main_cpy();
+        /* 텍스트를 지우기 위해 main_cpy를 초기화
+        main_cpy와 main_org가 전부 다르므로 다음번 draw()호출시 게임판 전체를 새로 그리게 된다.*/
+       
+        for(i=MAIN_Y-2;I>MAIN_Y-2-(level-1);i--) //레벨업 보상으로 각 레벨 -1의 수만큼 아래쪽 줄을 지움.
+        {
+          for(j=1;j<MAIN_X-1;j++)
+          {
+            main_org[i][j]=INACTIVE_BLOCK; 
+            gotoxy(MAIN_X_ADJ+j;MAIN_Y_ADJ+i);
+            printf("★"); //별로 아랫줄 채우고 
+            Sleep(20);
+          }
+        }
+        Sleep(100);
+        check_line(); //채운것 지우기
+        switch(level) //레벨별 속도조절
+        {
+          case 2:
+            speed=50;
+            break;
+          case 3:
+            speed=25;
+            break;
+          case 4:
+            speed=10;
+            break;
+          case 5:
+            speed=5;
+            break;
+          case 6:
+            speed=4;
+            break;
+          case 7:
+            speed=3;
+            break;
+          case 8:
+            speed=2;
+            break;
+          case 9:
+            speed=1;
+            break;
+          case 10:
+            speed=0;
+            break;
+        }
+        level_up_on=0;
+        gotoxy(STATUS_X_ADJ,STATUS_Y_LEVEL);
+        printf("LEVEL:%5d",level);
+        gotoxy(STATUS_X_ADJ,STATUS_Y_GOAL);
+        printf("GOAL:%5d",10-cnt);
+      }
+    }
             
-      
-        
-        
-    
-    
-    
-      
-  
-           
-           
-           
-           
-    
