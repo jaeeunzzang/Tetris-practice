@@ -795,4 +795,52 @@ void title(void)
         printf("GOAL:%5d",10-cnt);
       }
     }
-            
+ 
+   void check_game_over(void) //게임오버 화면
+   {
+     int i;
+     int x=5;
+     int y=5;
+     
+     for(i=1;i<MAIN_X-2;i++)
+     {
+       if(main_org[3][i]>0) //천장(위에서 세번째 줄) 에 inactive block 이 생성되면 게임오버.
+       {
+         gotoxy(x,y+0); printf("▤▤▤▤▤▤▤▤▤▤▤▤▤▤▤▤▤");
+         gotoxy(x,y+1); printf("▤                           ▤");
+         gotoxy(x,y+2); printf("▤ +-----------------------+ ▤");
+         gotoxy(x,y+3); printf("▤ |  G A M E  O V E R . . | ▤");
+         gotoxy(x,y+4); printf("▤ +-----------------------+ ▤");
+         gotoxy(x,y+5); printf("▤ Y O U R  S C O R E : %6d  ▤",score);
+         gotoxy(x,y+6); printf("▤                           ▤");
+         gotoxy(x,y+7); printf("▤  Press Any Key To Restart ▤");
+         gotoxy(x,y+8); printf("▤                           ▤");
+         gotoxy(x,y+9); printf("▤▤▤▤▤▤▤▤▤▤▤▤▤▤▤▤▤");
+         last_score=score; //게임 점수를 옮김.
+         
+         if(score>best_score) //최고기록 갱신시
+         {
+           FILE* file=fopen("score.dat","wt");
+          gotoxy(x,y+6); printf("▤ ☆☆☆ BEST  SCORE! ☆☆☆ ▤");
+           
+           if(file==0) //파일에러 메시지
+           {
+             gotoxy(0,0);
+             printf("FILE ERROR: SYSTEM CANNOT WRITE BEST SCORE ON\"SCORE.DAT\"");
+           }
+          else
+          {
+            fprintf(file,"%d",score);
+            fclose(file);
+          }
+         }
+         Sleep(1000);
+         while (kbhit())
+           getch();
+         key=getch();
+         reset();
+       }
+     }
+   }
+         
+     
